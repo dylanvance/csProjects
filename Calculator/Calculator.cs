@@ -13,9 +13,9 @@ namespace Calculator
 {
     public partial class Calculator : Form
     {
-        private int value1;
-        private int value2;
-        private int result;
+        private float value1;
+        private float value2;
+        private float result;
         private string operation;
 
         public Calculator()
@@ -23,23 +23,60 @@ namespace Calculator
             InitializeComponent();
         }
 
-        // To Do: Add floating point support
-
         private void ClearButton_Click(object sender, EventArgs e) => OutputLabel.Text = "";
 
         private void SignButton_Click(object sender, EventArgs e)
         {
-            // To Do: Change sign of value 
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                    tempInt *= -1;
+                    OutputLabel.Text = tempInt.ToString();
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                    tempFloat *= -1.0f;
+                    OutputLabel.Text = tempFloat.ToString();
+            }
         }
 
         private void PercentButton_Click(object sender, EventArgs e)
         {
-            // To Do: Convert value to percent
+            try
+            {
+                result = float.Parse(OutputLabel.Text) / 100;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+            try
+            {
+                result = (float)Int32.Parse(OutputLabel.Text) / 100;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            OutputLabel.Text = result.ToString();
         }
 
         private void DivisionButton_Click(object sender, EventArgs e)
         {
-            value1 = Int32.Parse(OutputLabel.Text);
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                value1 = Int32.Parse(OutputLabel.Text);
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                value1 = float.Parse(OutputLabel.Text);
+            }
+            else
+            {
+                return; // Something went wrong -> prevent the operation
+            }
             operation = "DIVISION";
             OutputLabel.Text = "";
         }
@@ -52,7 +89,20 @@ namespace Calculator
 
         private void MultiplicationButton_Click(object sender, EventArgs e)
         {
-            value1 = Int32.Parse(OutputLabel.Text);
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                value1 = Int32.Parse(OutputLabel.Text);
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                value1 = float.Parse(OutputLabel.Text);
+            }
+            else
+            {
+                return; // Something went wrong -> prevent the operation
+            }
             operation = "MULTIPLICATION";
             OutputLabel.Text = "";
         }
@@ -65,7 +115,20 @@ namespace Calculator
 
         private void SubtractionButton_Click(object sender, EventArgs e)
         {
-            value1 = Int32.Parse(OutputLabel.Text);
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                value1 = Int32.Parse(OutputLabel.Text);
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                value1 = float.Parse(OutputLabel.Text);
+            }
+            else
+            {
+                return; // Something went wrong -> prevent the operation
+            }
             operation = "SUBTRACTION";
             OutputLabel.Text = "";
         }
@@ -78,7 +141,20 @@ namespace Calculator
 
         private void AdditionButton_Click(object sender, EventArgs e)
         {
-            value1 = Int32.Parse(OutputLabel.Text);
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                value1 = Int32.Parse(OutputLabel.Text);
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                value1 = float.Parse(OutputLabel.Text);
+            }
+            else
+            {
+                return; // Something went wrong -> prevent the operation
+            }
             operation = "ADDITION";
             OutputLabel.Text = "";
         }
@@ -87,12 +163,26 @@ namespace Calculator
 
         private void DecimalButton_Click(object sender, EventArgs e)
         {
-            // To Do: Convert value to decimal
+            OutputLabel.Text += ".";
         }
 
         private void EqualsButton_Click(object sender, EventArgs e)
         {
-            value2 = Int32.Parse(OutputLabel.Text);
+            int tempInt;
+            float tempFloat;
+            if (Int32.TryParse(OutputLabel.Text, out tempInt))
+            {
+                value2 = Int32.Parse(OutputLabel.Text);
+            }
+            else if (float.TryParse(OutputLabel.Text, out tempFloat))
+            {
+                value2 = float.Parse(OutputLabel.Text);
+            }
+            else
+            {
+                return; // Something went wrong -> prevent the operation
+            }
+
             switch(operation)
             {
                 case "ADDITION":
@@ -118,5 +208,6 @@ namespace Calculator
         }
 
         private void OutputLabel_Click(object sender, EventArgs e) {/*Do Nothing On Click*/}
+
     }
 }
